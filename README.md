@@ -10,6 +10,8 @@
 ## usuario administrar una lista de tareas.
 Básicamente lo que entiendo es que un usuario va a poder sólo mirar sus propias listas de tareas y las de ningún otro usuario más
 -   Instalaré la versión sencilla para mi de login que viene en LaravelUI y genero el scaffold. 
-## - Debe ser posible etiquetar cada tarea de la lista (ej: "Supermercado", "Trabajo", etc).
+## Debe ser posible etiquetar cada tarea de la lista (ej: "Supermercado", "Trabajo", etc).
+- Agregué una relación de muchos a muchos Tag y TaskTag para relacionar las tareas y los tags
 ## Debe ser posible filtrar las tareas por una o más etiquetas.
 ## Debe ser posible marcar una tarea como finalizada.
+- Se agregó la columna estado, podría ser un booleano, pero prefiero ponerle un entero por que en tareas pueden existir diferentes estados en un planteamiento futuro
