@@ -14,6 +14,13 @@ class Task extends Model
      */
     public function tags()
     {
-        return $this->belongsToMany(Task::class, TaskTag::class);
+        return $this->belongsToMany(Tag::class, TaskTag::class);
+    }
+    /**
+     * Get the post that owns the comment.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
