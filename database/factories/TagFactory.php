@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Tag;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,7 +25,9 @@ class TagFactory extends Factory
     public function definition()
     {
         return [
-            'title'=>$this->faker->unique()->word
+            'title'=>$this->faker->unique()->word,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ];
     }
 }

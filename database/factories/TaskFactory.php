@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Task;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,6 +26,8 @@ class TaskFactory extends Factory
             'description' => $this->faker->text,
             'state' => $this->faker->numberBetween(0, 1),
             'user_id' => $this->faker->numberBetween(1, 10),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ];
     }
 }

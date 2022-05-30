@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
@@ -18,17 +19,17 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return view('task.index');
+        return view('task.index',['tasks'=>Task::with('tags')->paginate(15)]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function create()
     {
-        //
+        return view('task.create',['tags'=>Tag::all()]);
     }
 
     /**
