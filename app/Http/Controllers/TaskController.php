@@ -21,7 +21,8 @@ class TaskController extends Controller
     public function index()
     {
         $eloquent = Task::with('tags');
-        return view('task.index', ['tasks' => $eloquent->paginate(15)]);
+        $tags=$eloquent->get()->pluck('tags')->flatten()->unique('id');//Tag whereHas Task.user_id ==Auth::user()->id
+        return view('task.index', ['tasks' => $eloquent->paginate(15),'tags'=>$tags]);
     }
 
     /**
