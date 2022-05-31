@@ -1,23 +1,40 @@
 @extends('layouts.app')
 @push('header')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 @endpush
 @section('content')
     <div class="row">
         <div class="col-12">
-            <a href="{{route('task.create')}}" class="btn btn-primary offset-8 col-3">
+            <a href="{{route('tag.create')}}" class="btn btn-primary offset-1 col-3">
+                <i class="fa fa-plus"></i>
+                <span> Tag </span>
+            </a>
+            <a href="{{route('task.create')}}" class="btn btn-primary offset-4 col-3">
                 <i class="fa fa-plus"></i>
                 <span> Task </span>
             </a>
         </div>
     </div>
-    <div class="row m-4">
-        <select id="tag" name="tag" required multiple>
-            @foreach($tags as $tag)
-                <option value="{{$tag->id}}">{{$tag->title}}</option>
-            @endforeach
-        </select>
-    </div>
+    <form id="form_task" action="{{route('tag.tags')}}" method="POST">
+        @csrf
+        <div class="row m-4">
+            <div class="col-8 row">
+                <select class="col-12" id="tag" name="tags[]" required multiple>
+                    @foreach($tags as $tag)
+                        <option value="{{$tag->id}}"
+                                @if(!empty($tag_ids)&&in_array($tag->id,$tag_ids)) selected @endif>{{$tag->title}}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="col-4 row">
+                <button type="submit" class="btn btn-primary col-12">
+                    <i class='fa fa-search'></i>
+                    <span> Filtrar </span>
+                </button>
+            </div>
+        </div>
+    </form>
     <div class="row">
         @forelse ($tasks as $task)
             <div class="col-12">
@@ -57,8 +74,8 @@
             </div>
         @endif
         <form id="form_task" action="{{route('task.update','idTask')}}" method="POST" hidden>
-            @method('PUT')
             @csrf
+            @method('PUT')
             <input type="hidden" id="state" value="1">
         </form>
     </div>
@@ -67,7 +84,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        $('#tag').select2({'placeholder':'@lang('Select minimum a tag')'});
+        $('#tag').select2({'placeholder': '@lang('Select minimum a tag')'});
+
         function changeSwitch(input, id) {
             if (!input.checked) {
                 input.checked = !input.checked;

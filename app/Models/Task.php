@@ -9,6 +9,8 @@ class Task extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['title', 'description', 'user_id'];
+
     /**
      * The tags that belong to the task.
      */
@@ -16,6 +18,7 @@ class Task extends Model
     {
         return $this->belongsToMany(Tag::class, TaskTag::class);
     }
+
     /**
      * Get the post that owns the comment.
      */

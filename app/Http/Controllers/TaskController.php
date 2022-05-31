@@ -10,6 +10,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -20,9 +21,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $eloquent = Task::with('tags');
-        $tags=$eloquent->get()->pluck('tags')->flatten()->unique('id');//Tag whereHas Task.user_id ==Auth::user()->id
-        return view('task.index', ['tasks' => $eloquent->paginate(15),'tags'=>$tags]);
+        $eloquent = Task::with('tags')->where('user_id', Auth::id());
+        $tags = $eloquent->get()->pluck('tags')->flatten()->unique('id');//Tag whereHas Task.user_id ==Auth::user()->id
+        return view('task.index', ['tasks' => $eloquent->paginate(15), 'tags' => $tags]);
     }
 
     /**
@@ -39,11 +40,15 @@ class TaskController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \App\Http\Requests\StoreTaskRequest $request
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function store(StoreTaskRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $validated['user_id'] = Auth::id();
+        $task = Task::create($validated);
+        $task->tags()->sync($request->tags);
+        return redirect()->route('task.index');
     }
 
     /**

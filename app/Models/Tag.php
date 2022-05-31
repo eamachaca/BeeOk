@@ -9,6 +9,8 @@ class Tag extends Model
 {
     use HasFactory;
 
+    protected $fillable=['title'];
+
     /**
      * The tasks that belong to the tag.
      */

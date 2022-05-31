@@ -14,11 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome',['users'=>\App\Models\User::all()]);
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('task', \App\Http\Controllers\TaskController::class)->only(['index', 'create', 'update']);
-Route::get('tag/{id}/tasks', [App\Http\Controllers\TagController::class, 'tasks'])->name('tag.tasks');
+Route::middleware('auth')->group(function () {
+    Route::resource('task', \App\Http\Controllers\TaskController::class)->except(['destroy', 'edit','show']);
+    Route::resource('tag', \App\Http\Controllers\TagController::class)->only(['create', 'store']);
+    Route::get('tag/{id}/tasks', [App\Http\Controllers\TagController::class, 'tasks'])->name('tag.tasks');
+    Route::post('tags', [App\Http\Controllers\TagController::class, 'tags'])->name('tag.tags');
+});
