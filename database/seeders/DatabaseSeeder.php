@@ -18,11 +18,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::factory(10)->hasTasks(100)->create();
-        $this->command->info("Creating 10 users each of them with his 25 tasks");
+        $this->command->info("Creating 10 users each of them with his 100 tasks");
         $tags=Tag::factory(100)->create();
-        $this->command->info("Creating 35 tags without relationship because I wanna relate with some of that with each task");
+        $this->command->info("Creating 100 tags without relationship because I wanna relate with some of that with each task");
         foreach (Task::all() as $task){
             $aux=$tags->random(7);
+            $this->command->info("Sync 7 tags with {$task->title} task");
             $task->tags()->sync($aux->pluck('id'));
         }
         $this->command->comment("Finish");
