@@ -13,5 +13,7 @@ Básicamente lo que entiendo es que un usuario va a poder sólo mirar sus propia
 ## Debe ser posible etiquetar cada tarea de la lista (ej: "Supermercado", "Trabajo", etc).
 - Agregué una relación de muchos a muchos Tag y TaskTag para relacionar las tareas y los tags
 ## Debe ser posible filtrar las tareas por una o más etiquetas.
+- Agregué una ruta para conforme una etiqueta seleccionada filtre las tareas de esa etiqueta.
 ## Debe ser posible marcar una tarea como finalizada.
-- Se agregó la columna estado, podría ser un booleano, pero prefiero ponerle un entero por que en tareas pueden existir diferentes estados en un planteamiento futuro
+- Se agregó la columna estado, podría ser un booleano, pero prefiero ponerle un entero por que en tareas pueden existir diferentes estados en un planteamiento futuro (aunque lo esté utilizando como booleano D:)
+- He utilizado el HTTP method update para cambiar el estado de la tarea.

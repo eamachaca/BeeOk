@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateTaskRequest;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class TaskController extends Controller
 {
@@ -19,7 +20,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return view('task.index',['tasks'=>Task::with('tags')->paginate(15)]);
+        $eloquent = Task::with('tags');
+        return view('task.index', ['tasks' => $eloquent->paginate(15)]);
     }
 
     /**
@@ -29,13 +31,13 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('task.create',['tags'=>Tag::all()]);
+        return view('task.create', ['tags' => Tag::all()]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreTaskRequest  $request
+     * @param \App\Http\Requests\StoreTaskRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreTaskRequest $request)
@@ -46,7 +48,7 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Task  $task
+     * @param Task $task
      * @return \Illuminate\Http\Response
      */
     public function show(Task $task)
@@ -57,7 +59,7 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Task  $task
+     * @param Task $task
      * @return \Illuminate\Http\Response
      */
     public function edit(Task $task)
@@ -68,19 +70,21 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateTaskRequest  $request
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
+     * @param UpdateTaskRequest $request
+     * @param Task $task
+     * @return RedirectResponse
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        //
+        $task->state = 1;
+        $task->save();
+        return redirect()->route('task.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Task  $task
+     * @param Task $task
      * @return \Illuminate\Http\Response
      */
     public function destroy(Task $task)

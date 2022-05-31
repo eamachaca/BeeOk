@@ -20,4 +20,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('task',\App\Http\Controllers\TaskController::class);
+Route::resource('task', \App\Http\Controllers\TaskController::class)->only(['index', 'create', 'update']);
+Route::get('tag/{id}/tasks', [App\Http\Controllers\TagController::class, 'tasks'])->name('tag.tasks');

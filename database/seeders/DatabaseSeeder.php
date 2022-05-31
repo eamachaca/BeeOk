@@ -21,9 +21,9 @@ class DatabaseSeeder extends Seeder
         $this->command->info("Creating 10 users each of them with his 25 tasks");
         $tags=Tag::factory(35)->create();
         $this->command->info("Creating 35 tags without relationship because I wanna relate with some of that with each task");
-        $tags=$tags->random(5);
         foreach (Task::all() as $task){
-            $task->tags()->sync($tags->pluck('id'));
+            $aux=$tags->random(5);
+            $task->tags()->sync($aux->pluck('id'));
         }
         $this->command->comment("Finish");
 
