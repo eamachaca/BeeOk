@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@push('header')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endpush
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -9,7 +11,14 @@
             </a>
         </div>
     </div>
-    <div class="row mt-4">
+    <div class="row m-4">
+        <select id="tag" name="tag" required multiple>
+            @foreach($tags as $tag)
+                <option value="{{$tag->id}}">{{$tag->title}}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="row">
         @forelse ($tasks as $task)
             <div class="col-12">
                 <div class="card">
@@ -20,7 +29,11 @@
                                    @if($task->state==1) checked
                                    @endif onchange=" return changeSwitch(this,{{$task->id}})">
                             <label class="form-check-label" for="flexSwitchCheckChecked">
-                                @if($task->state==1) @lang("ACTIVE") @else @lang("INACTIVE") @endif
+                                @if($task->state==1)
+                                    @lang("ACTIVE")
+                                @else
+                                    @lang("INACTIVE")
+                                @endif
                             </label>
                         </div>
                     </div>
@@ -51,10 +64,13 @@
     </div>
 @endsection
 @push('js')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
+        $('#tag').select2({'placeholder':'@lang('Select minimum a tag')'});
         function changeSwitch(input, id) {
             if (!input.checked) {
-                input.checked=!input.checked;
+                input.checked = !input.checked;
                 return false;
             }
             const frm = document.getElementById('form_task');

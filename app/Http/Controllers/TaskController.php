@@ -47,28 +47,6 @@ class TaskController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param Task $task
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Task $task)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Task $task
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Task $task)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param UpdateTaskRequest $request
@@ -80,16 +58,5 @@ class TaskController extends Controller
         $task->state = 1;
         $task->save();
         return redirect()->route('task.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Task $task
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Task $task)
-    {
-        //
     }
 }
