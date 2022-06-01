@@ -15,7 +15,7 @@
             </a>
         </div>
     </div>
-    <form id="form_task" action="{{route('tag.tags')}}" method="POST">
+    <form action="{{route('tag.tags')}}" method="POST">
         @csrf
         <div class="row m-4">
             <div class="col-8 row">
